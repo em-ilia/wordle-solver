@@ -21,3 +21,5 @@ Instead, I've done my testing so far using [this version of the game](https://oc
 		* I'm thinking that if I run a _lot_ of simulations, I can find a weighting that converges to a real solution most rapidly. I have processor time to burn.
 * Improve project formatting
 	* Perhaps, just maybe, don't dump everything in a file called `solve.py`?
+* ✨User Experience✨
+	* Manually calling `.enter()` is unpleasant
