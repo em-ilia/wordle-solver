@@ -150,7 +150,7 @@ class GameState:
 
 
 words = []
-with open('all_words.csv', 'r') as f:
+with open('words.csv', 'r') as f:
     for l in f.readlines():
         words.append(l[:5])
 
