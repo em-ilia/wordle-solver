@@ -1,4 +1,4 @@
-
+from string import ascii_lowercase
 _swap = lambda i: (i[1],i[0])
 class LetterDict:
     def __init__(self):
