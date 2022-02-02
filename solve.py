@@ -148,12 +148,6 @@ class GameState:
             self.list
         ))
 
-
-words = []
-with open('words.csv', 'r') as f:
-    for l in f.readlines():
-        words.append(l[:5])
-
 lds = []
 lpds = []
 for i in range(0,5):
