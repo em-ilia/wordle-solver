@@ -1,49 +1,6 @@
-import json
 from string import ascii_lowercase
 
-swap = lambda i: (i[1],i[0])
-class LetterDict:
-    def __init__(self):
-        self.dict = {}
-        for x in ascii_lowercase:
-            self.dict[x] = 0
 
-    def inc(self, letter):
-        self.dict[letter] += 1
-
-    def __str__(self):
-        return str(self.dict)
-    __repr__ = __str__
-
-class LetterProbDict:
-    def __init__(self, ld, wordcount):
-        self.dict = {}
-        for x in ascii_lowercase:
-            self.dict[x] = ld.dict[x]/wordcount
-    def __str__(self):
-        return str(self.dict)
-    __repr__ = __str__
-
-    def max(self):
-        #itms = (self.dict.items())
-        #s = map(, itms)
-        #m = max(swap)
-        #return m
-        return swap(max(map(swap, self.dict.items())))
-
-    # Returns sorted DESCENDING
-    def sorted(self):
-        return list(map(swap, sorted(map(swap, self.dict.items()))))[::-1]
-
-def maximizeWordProb(lpds, wl):
-    augmented_wl = []
-    t_list = []
-    for w in wl:
-        for i,l in enumerate(w):
-            t_list.append(lpds[i].dict[l])
-        augmented_wl.append((w, sum(t_list)))
-        t_list.clear()
-    return sorted(map(swap, augmented_wl))
 
 class GameState:
     def __init__(self, initialList, *, state='?????',
@@ -156,13 +113,6 @@ for i in range(0,5):
         ld.inc(word[i])
     lds.append(ld)
     lpds.append(LetterProbDict(ld, len(words)))
-
-ldsj = json.dumps(lds, default=vars, indent=2)
-with open('ld.json', 'w') as f:
-    f.write(ldsj)
-lpdsj = json.dumps(lpds, default=vars, indent=2)
-with open('lpd.json', 'w') as f:
-    f.write(lpdsj)
 
 G = GameState(maximizeWordProb(lpds, words),
               print_on_recalc=True,
