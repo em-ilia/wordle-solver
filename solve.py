@@ -104,15 +104,6 @@ class GameState:
             self.list
         ))
 
-lds = []
-lpds = []
-for i in range(0,5):
-    ld = LetterDict()
-    for word in words:
-        ld.inc(word[i])
-    lds.append(ld)
-    lpds.append(LetterProbDict(ld, len(words)))
-
 G = GameState(maximizeWordProb(lpds, words),
               print_on_recalc=True,
               recalc_on_enter=True)

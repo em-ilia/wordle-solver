@@ -43,6 +43,30 @@ class LetterProbDict:
     def sorted(self):
         return list(map(_swap, sorted(map(_swap, self.dict.items()))))[::-1]
 
+class WordStats:
+    def __init__(self, wl=[]):
+        self.wordlist = wl
+
+        self.letterdicts = []
+        self.letterprobdicts = []
+
+        if wordlist:
+            self.calculate()
+
+    def calculate(self):
+        self._calc_letterdicts()
+        self._calc_letterprobdicts()
+
+    def _calc_letterdicts(self):
+        for index in range(0,5):
+            self.letterdicts.append(
+                LetterDict.from_words(self.wordlist, index))
+
+    def _calc_letterprobdicts(self):
+        for ld in self.letterdicts:
+            self.letterprobdicts.append(
+                LetterProbDict(ld, ld.wordcount))
+
 def maximizeWordProb(lpds, wl):
     augmented_wl = []
     t_list = []
