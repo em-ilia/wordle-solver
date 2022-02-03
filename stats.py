@@ -136,12 +136,26 @@ class WordStats:
                 _LetterProbDict(ld))
 
     def _calc_total_letterdict(self):
+        """
+        Uses self.wordlist to generate _TotalLetterDict
+        """
         self.total_letterdict = _TotalLetterDict.from_words(self.wordlist)
 
     def _calc_total_letterprobdict(self):
+        """
+        Uses self.wordlist to generate _TotalLetterProbDict
+        This function should always be called after _calc_total_letterdict
+        """
         self.total_letterprobdict = _TotalLetterProbDict(self.total_letterdict)
 
     def maximizeWordProb(self, POS_SCALING=0.5, TOTAL_SCALING=0.5):
+        """
+        Computes the sum of the two word ranking metrics, with each multiplied
+        by a constant.
+
+        POS_SCALING -- factor by which to multiply positional metric
+        TOTAL_SCALING -- factor by which to multiply total metric
+        """
         return sorted(map(_swap,
                           [(a[0], POS_SCALING*a[1]+TOTAL_SCALING*b[1])
                            for (a,b) in
@@ -150,6 +164,10 @@ class WordStats:
                           ))
 
     def _maximizeWordProb_positional(self):
+        """
+        Computes a word ranking that maximizes the likelihood that a letter
+        will occur at a given index in the word.
+        """
         # Wordlist augmented with probability values
         # (word, prob)
         augmented_wl = []
@@ -171,6 +189,11 @@ class WordStats:
         return sorted(augmented_wl)
 
     def _maximizeWordProb_total(self):
+        """
+        Computes a work ranking that maximizes the likelihood that letters will
+        occur anywhere in the word. For example, if it was a valid word, this
+        method would claim 'eeeee' to be the best word.
+        """
         f = lambda w: (w,
                        sum([self.total_letterprobdict.dict[l]
                             for l in w]))
