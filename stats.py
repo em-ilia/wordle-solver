@@ -23,6 +23,14 @@ class _LetterDict:
             ld.inc(word[index])
         return ld
 
+class _TotalLetterDict(_LetterDict):
+    def from_words(words):
+        tld = _TotalLetterDict()
+        for word in words:
+            for l in word:
+                tld.inc(l)
+        return tld
+
 class _LetterProbDict:
     def __init__(self, ld):
         self.dict = {}
@@ -49,6 +57,7 @@ class WordStats:
 
         self.letterdicts = []
         self.letterprobdicts = []
+        self.total_letterdict = None
 
         if self.wordlist:
             self.calculate()
@@ -56,6 +65,7 @@ class WordStats:
     def calculate(self):
         self._calc_letterdicts()
         self._calc_letterprobdicts()
+        self._calc_total_letterdict()
 
     def _calc_letterdicts(self):
         for index in range(0,5):
@@ -66,6 +76,9 @@ class WordStats:
         for ld in self.letterdicts:
             self.letterprobdicts.append(
                 _LetterProbDict(ld))
+
+    def _calc_total_letterdict(self):
+        self.total_letterdict = _TotalLetterDict.from_words(self.wordlist)
 
     def maximizeWordProb(self):
         augmented_wl = []
