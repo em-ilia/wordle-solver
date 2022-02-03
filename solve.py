@@ -3,14 +3,14 @@ from WORDS import words
 
 class GameState:
     def __init__(self, initialList, *, state='?????',
-                 disallowed=set(), required=set(),
+                 #disallowed=set(), required=set(),
                  print_on_recalc=False,
                  num_to_print=10,
                  recalc_on_enter=False):
         self.state = state
         self.list = initialList
-        self.disallowed = disallowed
-        self.required = required
+        self.disallowed = set()
+        self.required = set()
         self.anti = {}
 
         #Options
