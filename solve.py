@@ -2,7 +2,7 @@ from stats import WordStats
 from WORDS import words
 
 class GameState:
-    def __init__(self, initialList, *, state='?????',
+    def __init__(self, wordstats, *, state='?????',
                  disallowed=set(), required=set(),
                  print_on_recalc=False,
                  num_to_print=10,
@@ -118,4 +118,3 @@ if __name__ == '__main__':
     G = GameState(ws,
                   print_on_recalc=True,
                   recalc_on_enter=True)
-    G.enter('slate', [1,0,0,1,2])
