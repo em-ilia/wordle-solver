@@ -4,10 +4,17 @@ class _LetterDict:
     def __init__(self):
         self.dict = {}
         self.wordcount = 0
+        # Fill dict with blank entries—all letters start with a value of 0
         for x in ascii_lowercase:
             self.dict[x] = 0
 
     def inc(self, letter):
+        """
+        Increment the known number of occurrances of letter in the dict.
+        As a side effect, the wordcount is increased as well.
+
+        letter -- single character string
+        """
         self.wordcount += 1
         self.dict[letter] += 1
 
@@ -16,6 +23,14 @@ class _LetterDict:
     __repr__ = __str__
 
     def from_words(words, index):
+        """
+        Initialize a _LetterDict from a list of words and an index
+        This will count the number of times each letter is seen at the given
+        index.
+
+        words -- list of strings containing words
+        index -- position to check, must be in range [0,4]
+        """
         assert (0 <= index < 5)
 
         ld = _LetterDict()
@@ -24,7 +39,13 @@ class _LetterDict:
         return ld
 
 class _TotalLetterDict(_LetterDict):
+    # Non-positional equivalent of _LetterDict
     def from_words(words):
+        """
+        Count the number of times a letter is seen anywhere in a list of words.
+
+        words -- list of strings containing words
+        """
         tld = _TotalLetterDict()
         for word in words:
             for l in word:
@@ -33,6 +54,13 @@ class _TotalLetterDict(_LetterDict):
 
 class _LetterProbDict:
     def __init__(self, ld):
+        """
+        Takes a _LetterDict and calculates the probability that a given letter
+        will occur at a given position in a word. The position in the word is
+        implicitly inherited from the _LetterDict passed to __init__.
+
+        ld -- _LetterDict
+        """
         self.dict = {}
         for x in ascii_lowercase:
             self.dict[x] = ld.dict[x]/ld.wordcount
@@ -41,6 +69,10 @@ class _LetterProbDict:
     __repr__ = __str__
 
     def max(self):
+        """
+        Unused.
+        Gets the most likely letter from the list.
+        """
         #itms = (self.dict.items())
         #s = map(, itms)
         #m = max(_swap)
@@ -49,9 +81,18 @@ class _LetterProbDict:
 
     # Returns sorted DESCENDING
     def sorted(self):
+        """
+        Unused.
+        Returns a list of letters in order of their calculated probabilities.
+        """
         return list(map(_swap, sorted(map(_swap, self.dict.items()))))[::-1]
 
 class _TotalLetterProbDict(_LetterProbDict):
+    """
+    Calculates the probability that a letter will occur anywhere in a word.
+    Since this calculation is essentially the same, this class can inherit from
+    _LetterProbDict with no modification.
+    """
     def __init__(self, tld):
         super().__init__(tld)
 
@@ -68,28 +109,53 @@ class WordStats:
             self.calculate()
 
     def calculate(self):
+        """
+        Utility function to generate all attributes of WordStats instance
+        """
         self._calc_letterdicts()
         self._calc_letterprobdicts()
         self._calc_total_letterdict()
         self._calc_total_letterprobdict()
 
     def _calc_letterdicts(self):
+        """
+        Uses self.wordlist to generate _LetterDict for each of the five
+        possible letter positions.
+        """
         for index in range(0,5):
             self.letterdicts.append(
                 _LetterDict.from_words(self.wordlist, index))
 
     def _calc_letterprobdicts(self):
+        """
+        Generates five _LetterProbDict using self.letterdicts
+        This function should always be called after _calc_letterdicts
+        """
         for ld in self.letterdicts:
             self.letterprobdicts.append(
                 _LetterProbDict(ld))
 
     def _calc_total_letterdict(self):
+        """
+        Uses self.wordlist to generate _TotalLetterDict
+        """
         self.total_letterdict = _TotalLetterDict.from_words(self.wordlist)
 
     def _calc_total_letterprobdict(self):
+        """
+        Uses self.wordlist to generate _TotalLetterProbDict
+        This function should always be called after _calc_total_letterdict
+        """
         self.total_letterprobdict = _TotalLetterProbDict(self.total_letterdict)
 
     def maximizeWordProb(self, POS_SCALING=0.5, TOTAL_SCALING=0.5):
+        """
+        Computes the sum of the two word ranking metrics, with each multiplied
+        by a constant.
+
+        POS_SCALING -- factor by which to multiply positional metric
+        TOTAL_SCALING -- factor by which to multiply total metric
+        """
         return sorted(map(_swap,
                           [(a[0], POS_SCALING*a[1]+TOTAL_SCALING*b[1])
                            for (a,b) in
@@ -98,6 +164,10 @@ class WordStats:
                           ))
 
     def _maximizeWordProb_positional(self):
+        """
+        Computes a word ranking that maximizes the likelihood that a letter
+        will occur at a given index in the word.
+        """
         # Wordlist augmented with probability values
         # (word, prob)
         augmented_wl = []
@@ -119,6 +189,11 @@ class WordStats:
         return sorted(augmented_wl)
 
     def _maximizeWordProb_total(self):
+        """
+        Computes a work ranking that maximizes the likelihood that letters will
+        occur anywhere in the word. For example, if it was a valid word, this
+        method would claim 'eeeee' to be the best word.
+        """
         f = lambda w: (w,
                        sum([self.total_letterprobdict.dict[l]
                             for l in w]))
