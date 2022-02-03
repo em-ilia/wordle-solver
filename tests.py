@@ -33,5 +33,11 @@ class TestStatsCalculations(unittest.TestCase):
         self.assertTrue(abs(sum(self.ws.total_letterprobdict.dict.values())-1)
                         < 2e-15)
 
+    # Just to track if the algorithm changes even with constant scaling
+    def testMWP_consistency(self):
+        self.assertEqual(self.ws.
+                         maximizeWordProb(POS_SCALING=0.5,
+                                          TOTAL_SCALING=0.5)[-1][1], 'slate')
+
 if __name__ == '__main__':
     unittest.main()
