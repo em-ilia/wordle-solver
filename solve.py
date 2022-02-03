@@ -2,16 +2,18 @@ from stats import WordStats
 from WORDS import words
 
 class GameState:
-    def __init__(self, initialList, *, state='?????',
+    def __init__(self, wordstats, *, state='?????',
                  disallowed='', required='',
                  print_on_recalc=False,
                  num_to_print=10,
                  recalc_on_enter=False):
         self.state = state
-        self.list = initialList
+        self.ws = wordstats
         self.disallowed = disallowed
         self.required = required
         self.anti = {}
+
+        self.list = ws.maximizeWordProb()
 
         #Options
         self.print_on_recalc = print_on_recalc
@@ -67,6 +69,11 @@ class GameState:
         self._f_required()
         self._f_positional()
         self._f_anti()
+
+        if self.list:
+            self.ws.update([x[1] for x in self.list])
+            self.list = ws.maximizeWordProb()
+
         if self.print_on_recalc:
             print(self.list[-(self.num_to_print):])
 
@@ -106,6 +113,7 @@ class GameState:
 
 if __name__ == '__main__':
     ws = WordStats(words)
-    G = GameState(ws.maximizeWordProb(),
+    G = GameState(ws,
                   print_on_recalc=True,
                   recalc_on_enter=True)
+    G.enter('slate', [1,0,0,1,2])

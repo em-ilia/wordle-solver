@@ -117,6 +117,10 @@ class WordStats:
         self._calc_total_letterdict()
         self._calc_total_letterprobdict()
 
+    def update(self, wl):
+        self.wordlist = wl
+        self.calculate()
+
     def _calc_letterdicts(self):
         """
         Uses self.wordlist to generate _LetterDict for each of the five
