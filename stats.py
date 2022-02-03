@@ -50,7 +50,7 @@ class WordStats:
         self.letterdicts = []
         self.letterprobdicts = []
 
-        if wordlist:
+        if self.wordlist:
             self.calculate()
 
     def calculate(self):
@@ -65,14 +65,14 @@ class WordStats:
     def _calc_letterprobdicts(self):
         for ld in self.letterdicts:
             self.letterprobdicts.append(
-                LetterProbDict(ld, ld.wordcount))
+                LetterProbDict(ld))
 
-def maximizeWordProb(lpds, wl):
-    augmented_wl = []
-    t_list = []
-    for w in wl:
-        for i,l in enumerate(w):
-            t_list.append(lpds[i].dict[l])
-        augmented_wl.append((w, sum(t_list)))
-        t_list.clear()
-    return sorted(map(_swap, augmented_wl))
+    def maximizeWordProb(self):
+        augmented_wl = []
+        t_list = []
+        for w in self.wordlist:
+            for i,l in enumerate(w):
+                t_list.append(self.letterprobdicts[i].dict[l])
+            augmented_wl.append((w, sum(t_list)))
+            t_list.clear()
+        return sorted(map(_swap, augmented_wl))
