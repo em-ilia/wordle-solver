@@ -34,3 +34,24 @@ class GameInstance():
         while not self.status:
             if self.attempts > 10: break
             self.cycle()
+class GameManager():
+    def __init__(self, parameters, *, count=0):
+        self.count = count if count else len(words)
+        self.parameters = parameters
+        #(self.POS, self.TOTAL) = parameters
+
+        #self.games = [GameInstance(w, parameters) for w in words[0:count]]
+        self.games = []
+        for w in words[0:count]:
+            self.games.append(GameInstance(w, self.parameters))
+
+        self.complete = False
+
+    def run(self):
+        for game in self.games:
+            game.run()
+        self.complete = True
+
+    def compute_avgAttempts(self):
+        assert self.complete
+        return sum([g.attempts for g in self.games]) / self.count
