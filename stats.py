@@ -1,6 +1,6 @@
 from string import ascii_lowercase
 _swap = lambda i: (i[1],i[0])
-class LetterDict:
+class _LetterDict:
     def __init__(self):
         self.dict = {}
         self.wordcount = 0
@@ -18,12 +18,12 @@ class LetterDict:
     def from_words(words, index):
         assert (0 <= index < 5)
 
-        ld = LetterDict()
+        ld = _LetterDict()
         for word in words:
             ld.inc(word[index])
         return ld
 
-class LetterProbDict:
+class _LetterProbDict:
     def __init__(self, ld):
         self.dict = {}
         for x in ascii_lowercase:
@@ -60,12 +60,12 @@ class WordStats:
     def _calc_letterdicts(self):
         for index in range(0,5):
             self.letterdicts.append(
-                LetterDict.from_words(self.wordlist, index))
+                _LetterDict.from_words(self.wordlist, index))
 
     def _calc_letterprobdicts(self):
         for ld in self.letterdicts:
             self.letterprobdicts.append(
-                LetterProbDict(ld))
+                _LetterProbDict(ld))
 
     def maximizeWordProb(self):
         augmented_wl = []
