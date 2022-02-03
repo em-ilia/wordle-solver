@@ -3,7 +3,7 @@ from WORDS import words
 
 class GameState:
     def __init__(self, initialList, *, state='?????',
-                 disallowed='', required='',
+                 disallowed=set(), required=set(),
                  print_on_recalc=False,
                  num_to_print=10,
                  recalc_on_enter=False):
@@ -39,17 +39,19 @@ class GameState:
                 self.addAnti(i,l)
             elif r == 2:
                 self.addState(i,l)
+                self.addRequired(l)
+        self.disallowed.difference_update(self.required)
 
         if self.recalc_on_enter:
             self.recalculate()
 
     def addDisallowed(self, letters=''):
         if not letters: pass # Minor optimization, should not happen
-        self.disallowed = ''.join(set(self.disallowed + letters))
+        self.disallowed.update(letters)
 
     def addRequired(self, letters=''):
         if not letters: pass # Minor optimization, should not happen
-        self.required = ''.join(set(self.required + letters))
+        self.required.update(letters)
 
     def addAnti(self, pos, letter):
         if not 0 <= pos <= 4: pass
