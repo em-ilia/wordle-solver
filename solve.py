@@ -1,5 +1,5 @@
-
-
+from stats import WordStats
+from WORDS import words
 
 class GameState:
     def __init__(self, initialList, *, state='?????',
@@ -104,6 +104,8 @@ class GameState:
             self.list
         ))
 
-G = GameState(maximizeWordProb(lpds, words),
-              print_on_recalc=True,
-              recalc_on_enter=True)
+if __name__ == '__main__':
+    ws = WordStats(words)
+    G = GameState(ws.maximizeWordProb(),
+                  print_on_recalc=True,
+                  recalc_on_enter=True)
