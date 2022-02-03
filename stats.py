@@ -89,12 +89,41 @@ class WordStats:
     def _calc_total_letterprobdict(self):
         self.total_letterprobdict = _TotalLetterProbDict(self.total_letterdict)
 
-    def maximizeWordProb(self):
+    def maximizeWordProb(self, POS_SCALING=0.5, TOTAL_SCALING=0.5):
+        return sorted(map(_swap,
+                          [(a[0], POS_SCALING*a[1]+TOTAL_SCALING*b[1])
+                           for (a,b) in
+                           zip(self._maximizeWordProb_positional(),
+                               self._maximizeWordProb_total())]
+                          ))
+
+    def _maximizeWordProb_positional(self):
+        # Wordlist augmented with probability values
+        # (word, prob)
         augmented_wl = []
+
+        # Temporary list, cleared once per word
         t_list = []
+
+        # Iterate over all valid words
         for w in self.wordlist:
+
+            # In each word, get each index and character
             for i,l in enumerate(w):
+                # Search for the probability of having character l at index i
+                # Put in temporary list
                 t_list.append(self.letterprobdicts[i].dict[l])
+            # Sum the probabilities in t_list
             augmented_wl.append((w, sum(t_list)))
             t_list.clear()
-        return sorted(map(_swap, augmented_wl))
+        return sorted(augmented_wl)
+
+    def _maximizeWordProb_total(self):
+        f = lambda w: (w,
+                       sum([self.total_letterprobdict.dict[l]
+                            for l in w]))
+        return sorted(map(f, self.wordlist))
+
+if __name__ == '__main__':
+    from WORDS import words
+    ws = WordStats(words)
