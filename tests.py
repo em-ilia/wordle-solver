@@ -29,5 +29,9 @@ class TestStatsCalculations(unittest.TestCase):
         self.assertEqual(sum(self.ws.total_letterdict.dict.values())/5,
                          len(self.ws.wordlist))
 
+    def testTotalLetterProbDictSums(self):
+        self.assertTrue(abs(sum(self.ws.total_letterprobdict.dict.values())-1)
+                        < 2e-15)
+
 if __name__ == '__main__':
     unittest.main()
