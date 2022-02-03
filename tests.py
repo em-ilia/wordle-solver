@@ -23,7 +23,7 @@ class TestStatsCalculations(unittest.TestCase):
     def testLetterProbDictSums(self):
         for n, lpd in enumerate(self.ws.letterprobdicts):
             with self.subTest(i=n):
-                self.assertTrue(sum(lpd.dict.values())-1 < 2e-15)
+                self.assertTrue(abs(sum(lpd.dict.values())-1) < 2e-15)
 
     def testTotalLetterDictSum(self):
         self.assertEqual(sum(self.ws.total_letterdict.dict.values())/5,
