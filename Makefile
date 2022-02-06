@@ -2,9 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Iconst
 VPATH=stats:const
 
-#SOURCES = stats/LetterDict.cpp
-
 LetterDict.o:
+TotalLetterDict.o:
 
 .PHONY: clean
 
