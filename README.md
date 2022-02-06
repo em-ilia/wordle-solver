@@ -14,10 +14,7 @@ Instead, I've done my testing so far using [this version of the game](https://oc
 
 ---
 ## TODO:
-* Write a system (game.py) to pick words from the list and provide feedback
-* Improve word ranking
-	* Run lots of tests to find an ideal weighting
-		* I'm thinking that if I run a _lot_ of simulations, I can find a weighting that converges to a real solution most rapidly. I have processor time to burn.
+* Improve word ranking? Can it be done?
 * Update README status section
 * ✨User Experience✨
 	* Manually calling `.enter()` is unpleasant
