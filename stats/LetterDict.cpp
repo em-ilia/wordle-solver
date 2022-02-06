@@ -1,5 +1,5 @@
 #include <iostream>
-#include "stats.hpp"
+#include "LetterDict.hpp"
 
 LetterDict::LetterDict() {
 	this -> wordcount = 0;

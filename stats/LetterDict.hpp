@@ -1,5 +1,5 @@
-#ifndef STATS_H
-#define STATS_H
+#ifndef LETTERDICT_H
+#define LETTERDICT_H
 
 #include <string>
 #include <map>
