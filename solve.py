@@ -19,6 +19,9 @@ class GameState:
         self.recalc_on_enter = recalc_on_enter
 
     def setState(self, state, sideEffect=False):
+        """
+        Unused!
+        """
         if not len(state) == 5: pass
 
         self.state = state
@@ -46,14 +49,37 @@ class GameState:
             self.recalculate()
 
     def addDisallowed(self, letters=''):
+        """
+        Since letters is a string, which is iterable, the elements of the
+        string are added to the set self.disallowed with the update function
+
+        letters -- string of lowercase alpha characters
+        """
         if not letters: pass # Minor optimization, should not happen
         self.disallowed.update(letters)
 
     def addRequired(self, letters=''):
+        """
+        Since letters is a string, which is iterable, the elements of the
+        string are added to the set self.required with the update function
+
+        letters -- string of lowercase alpha characters
+        """
         if not letters: pass # Minor optimization, should not happen
         self.required.update(letters)
 
     def addAnti(self, pos, letter):
+        """
+        self.anti is a dict with letters as keys and sets as values
+        Adding letter at pos to self.anti does the following:
+        Check if letter is already a key in self.anti
+        If not, add as a key to the dict with value {pos}, a set containing pos
+        If the key exists, add pos to the set (which automatically ignores
+        duplicates)
+
+        pos -- int in range [0,4]
+        letter -- lowercase alpha character
+        """
         if not 0 <= pos <= 4: pass
         if not (l := self.anti.get(letter)):
             self.anti[letter] = {pos}
@@ -61,10 +87,20 @@ class GameState:
             l.add(pos)
 
     def addState(self, pos, letter):
+        """
+        Change the character in self.state at pos to letter
+
+        pos -- int in range [0,4]
+        letter -- lowercase alpha character
+        """
         if not 0 <= pos <= 4: pass
         self.state = self.state[0:pos] + letter + self.state[pos+1:]
 
     def recalculate(self):
+        """
+        Run all self._f_* functions and print the list after the update,
+        if the relevant flag is set
+        """
         self._f_disallowed()
         self._f_required()
         self._f_positional()
@@ -73,6 +109,10 @@ class GameState:
             print(self.list[-(self.num_to_print):])
 
     def _f_disallowed(self, *, disallowed=''):
+        """
+        Filter the list, removing words that have letters in the blocklist,
+        self.disallowed
+        """
         if disallowed:
             self.addDisallowed(disallowed)
         self.list = list(filter(
@@ -80,6 +120,10 @@ class GameState:
             self.list))
 
     def _f_required(self, *, required=''):
+        """
+        Filter the list, removing words that do not contain letters required
+        by self.required
+        """
         if required:
             self.addRequired(required)
         self.list = list(filter(
@@ -88,6 +132,10 @@ class GameState:
         ))
 
     def _f_positional(self, *, state=''):
+        """
+        Filter the list, removing words that do not conform to the structure
+        required by self.state
+        """
         if state:
             self.setState(state)
         # Filtering for known positions
@@ -98,6 +146,10 @@ class GameState:
         ))
 
     def _f_anti(self, *, anti={}):
+        """
+        Filter the list, removing words that have letters in known disallowed
+        positions, stored in self.anti
+        """
         if anti:
             pass
         self.list = list(filter(
