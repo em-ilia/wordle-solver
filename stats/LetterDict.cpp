@@ -1,4 +1,3 @@
-#include <iostream>
 #include "LetterDict.hpp"
 
 LetterDict::LetterDict() {
@@ -20,9 +19,4 @@ LetterDict LetterDict::from_words(std::vector<std::string> words, int index) {
 		ld.inc(word[index]);
 	}
 	return ld;
-}
-
-int main() {
-	LetterDict ld = LetterDict::from_words(WORDS,0);
-	std::cout << ld.getDict()['a'] << "\n";
 }
