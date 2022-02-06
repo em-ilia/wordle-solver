@@ -148,7 +148,7 @@ class WordStats:
         """
         self.total_letterprobdict = _TotalLetterProbDict(self.total_letterdict)
 
-    def maximizeWordProb(self, POS_SCALING=0.5, TOTAL_SCALING=0.5):
+    def maximizeWordProb(self, POS_SCALING=1.0, TOTAL_SCALING=0.0):
         """
         Computes the sum of the two word ranking metrics, with each multiplied
         by a constant.
