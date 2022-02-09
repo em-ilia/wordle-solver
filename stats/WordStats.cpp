@@ -29,5 +29,5 @@ void WordStats::calc_total_letterdict() {
 }
 
 void WordStats::calc_total_letterprobdict() {
-	this -> total_letterprobdict = new LetterProbDict(static_cast<LetterDict>(this -> total_letterdict));
+	this -> total_letterprobdict = LetterProbDict(static_cast<LetterDict>(this -> total_letterdict));
 }

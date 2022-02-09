@@ -10,6 +10,7 @@ class LetterProbDict {
 		std::map<char, float> dict;
 	public:
 		LetterProbDict(LetterDict ld);
+		LetterProbDict() = default;
 		std::map<char, float> getDict(){return this -> dict;}
 };
 

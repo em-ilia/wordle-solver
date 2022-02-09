@@ -16,7 +16,7 @@ class WordStats {
 		std::vector<LetterProbDict> letterprobdicts;
 		TotalLetterDict total_letterdict;
 		// This has to be a pointer because there is no default constructor smh
-		LetterProbDict *total_letterprobdict; // No need to make a different class this time
+		LetterProbDict total_letterprobdict; // No need to make a different class this time
 
 		void calc_letterdicts();
 		void calc_letterprobdicts();
