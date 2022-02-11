@@ -8,6 +8,15 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <algorithm>
+
+struct AugmentedWord {
+	float prob;
+	std::string word;
+};
+bool compareAugmentedWord(AugmentedWord x, AugmentedWord y) {
+	return x.prob < y.prob;
+}
 
 class WordStats {
 	private:
@@ -23,12 +32,12 @@ class WordStats {
 		void calc_total_letterdict();
 		void calc_total_letterprobdict();
 
-		std::vector<std::string> maximizeWordProb_pos();
-		std::vector<std::string> maximizeWordProb_tot();
+		std::vector<AugmentedWord> maximizeWordProb_pos();
+		std::vector<AugmentedWord> maximizeWordProb_tot();
 	public:
 		WordStats(std::vector<std::string> words);
 		void calculate();
-		std::vector<std::string> maximizeWordProb(float POS, float TOT);
+		std::vector<AugmentedWord> maximizeWordProb(float POS, float TOT);
 };
 
 #endif

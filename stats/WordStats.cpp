@@ -31,3 +31,33 @@ void WordStats::calc_total_letterdict() {
 void WordStats::calc_total_letterprobdict() {
 	this -> total_letterprobdict = LetterProbDict(static_cast<LetterDict>(this -> total_letterdict));
 }
+
+std::vector<AugmentedWord> WordStats::maximizeWordProb_pos() {
+	std::vector<AugmentedWord> augmented_wl;
+	std::array<float, 5> t_array;
+	float t_sum;
+
+	for (auto word : this -> wordlist) {
+		t_sum = 0;
+		for (int i = 0; i < 5; i++) {
+			t_array[i] = this -> letterprobdicts[i].getDict()[word[i]];
+		}
+		for (float f : t_array) {
+			t_sum += f;
+		}
+
+		augmented_wl.push_back((AugmentedWord){t_sum, word});
+	}
+
+	std::sort(augmented_wl.begin(), augmented_wl.end(),
+						compareAugmentedWord);
+
+	return augmented_wl;
+}
+
+int main() {
+	// Must switch func declaration to public for this to run,
+	// but it does work when tested at this commit!
+	WordStats ws = WordStats(WORDS);
+	std::cout << ws.maximizeWordProb_pos().back().word << "\n";
+}
