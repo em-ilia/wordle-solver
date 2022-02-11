@@ -14,8 +14,11 @@ struct AugmentedWord {
 	float prob;
 	std::string word;
 };
-bool compareAugmentedWord(AugmentedWord x, AugmentedWord y) {
+bool compareAugmentedWord_prob(AugmentedWord x, AugmentedWord y) {
 	return x.prob < y.prob;
+}
+bool compareAugmentedWord_alpha(AugmentedWord x, AugmentedWord y) {
+	return x.word < y.word;
 }
 
 class WordStats {
@@ -37,7 +40,7 @@ class WordStats {
 	public:
 		WordStats(std::vector<std::string> words);
 		void calculate();
-		std::vector<AugmentedWord> maximizeWordProb(float POS, float TOT);
+		std::vector<AugmentedWord> maximizeWordProb(float POS = 1.0, float TOT = 0.0);
 };
 
 #endif

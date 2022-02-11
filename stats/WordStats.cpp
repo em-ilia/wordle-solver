@@ -49,8 +49,44 @@ std::vector<AugmentedWord> WordStats::maximizeWordProb_pos() {
 		augmented_wl.push_back((AugmentedWord){t_sum, word});
 	}
 
-	std::sort(augmented_wl.begin(), augmented_wl.end(),
-						compareAugmentedWord);
+	return augmented_wl;
+}
+
+std::vector<AugmentedWord> WordStats::maximizeWordProb_tot() {
+	std::vector<AugmentedWord> augmented_wl;
+	float t_sum;
+
+	for (auto word : wordlist) {
+		t_sum = 0;
+		for (auto letter : word) {
+			t_sum += total_letterprobdict.getDict()[letter];
+		}
+
+		augmented_wl.push_back((AugmentedWord){t_sum, word});
+	}
+
+	return augmented_wl;
+}
+
+std::vector<AugmentedWord> WordStats::maximizeWordProb(float POS, float TOT) {
+	// If TOT not to be considered (default case):
+	if (TOT == 0.0) {
+		auto v_pos = maximizeWordProb_pos();
+		std::sort(v_pos.begin(), v_pos.end(), compareAugmentedWord_prob);
+		return v_pos;
+	}
+
+	// Main branch
+	std::vector<AugmentedWord> augmented_wl;
+	auto v_pos = maximizeWordProb_pos();
+	auto v_tot = maximizeWordProb_tot();
+
+	for (int i = 0; i < v_pos.size(); i++) {
+		augmented_wl.push_back( (AugmentedWord){POS * v_pos[i].prob + TOT * v_tot[i].prob,
+													v_pos[i].word} );
+	}
+
+	std::sort(augmented_wl.begin(), augmented_wl.end(), compareAugmentedWord_prob);
 
 	return augmented_wl;
 }
@@ -59,5 +95,7 @@ int main() {
 	// Must switch func declaration to public for this to run,
 	// but it does work when tested at this commit!
 	WordStats ws = WordStats(WORDS);
-	std::cout << ws.maximizeWordProb_pos().back().word << "\n";
+	std::cout << ws.maximizeWordProb().back().word << " "
+						<< ws.maximizeWordProb().back().prob << "\n";
+	return 0;
 }
