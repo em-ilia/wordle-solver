@@ -6,23 +6,25 @@
 #include <vector>
 #include <array>
 #include <map>
-#include <set>
+#include <algorithm>
+#include <iterator>
+#include <unordered_set>
 
 class GameState{
 	private:
 		std::vector<AugmentedWord> initialList;
 
 		std::string state;
-		std::set<std::string> disallowed;
-		std::set<std::string> required;
-		std::map<std::string, std::set<int>> anti;
+		std::unordered_set<char> disallowed;
+		std::unordered_set<char> required;
+		std::map<char, std::unordered_set<int>> anti;
 	public:
 		GameState(std::vector<AugmentedWord> initialList);
 		void enter(std::string word, std::array<int, 5> res);
 		void recalculate();
 	private:
-		void addDisallowed(std::string letters);
-		void addRequired(std::string letters);
+		void addDisallowed(char letter);
+		void addRequired(char letter);
 		void addAnti(int pos, char letter);
 		void addState(int pos, char letter);
 
