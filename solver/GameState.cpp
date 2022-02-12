@@ -2,7 +2,7 @@
 
 
 GameState::GameState(std::vector<AugmentedWord> initialList) {
-	this -> initialList = initialList;
+	this -> wl = initialList;
 	this -> recalculate();
 }
 
@@ -33,6 +33,8 @@ void GameState::recalculate() {
 	filter_anti();
 }
 
+// ADD FUNCTIONS
+
 void GameState::addDisallowed(char letter) {
 	disallowed.insert(letter);
 }
@@ -51,4 +53,47 @@ void GameState::addAnti(int pos, char letter) {
 
 void GameState::addState(int pos, char letter) {
 	state[pos] = letter;
+}
+
+// FILTER FUNCTIONS
+// me when I set c++17 in my makefile so I can't use ranges
+// smh
+
+void GameState::filter_disallowed() {
+	for (char letter : disallowed) {
+		std::remove_if(wl.begin(), wl.end(),
+				[letter](auto aug_word) {
+					return aug_word.word.find(letter) == std::string::npos;
+				});
+	}
+}
+
+void GameState::filter_required() {
+	for (char letter : required) {
+		std::remove_if(wl.begin(), wl.end(),
+				[letter](auto aug_word) {
+					return aug_word.word.find(letter) != std::string::npos;
+				});
+	}
+}
+
+void GameState::filter_positional() {
+	for (int i = 0; i < 5; i++) {
+		if (state[i] == '?') continue;
+		std::remove_if(wl.begin(),wl.end(),
+				[this, i](auto aug_word) {
+					return aug_word.word[i] != this -> state[i];
+				});
+	}
+}
+
+void GameState::filter_anti() {
+	for (auto antiPair : anti) {
+		for (auto pos: antiPair.second) {
+			std::remove_if(wl.begin(),wl.end(),
+					[antiPair, pos](auto aug_word) {
+						return aug_word.word[pos] = antiPair.first;
+					});
+		}
+	}
 }

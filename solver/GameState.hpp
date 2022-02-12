@@ -12,7 +12,7 @@
 
 class GameState{
 	private:
-		std::vector<AugmentedWord> initialList;
+		std::vector<AugmentedWord> wl;
 
 		std::string state;
 		std::unordered_set<char> disallowed;
