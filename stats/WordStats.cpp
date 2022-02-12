@@ -1,5 +1,12 @@
 #include "WordStats.hpp"
 
+bool compareAugmentedWord_prob(AugmentedWord x, AugmentedWord y) {
+	return x.prob < y.prob;
+}
+bool compareAugmentedWord_alpha(AugmentedWord x, AugmentedWord y) {
+	return x.word < y.word;
+}
+
 WordStats::WordStats(std::vector<std::string> words) {
 	this -> wordlist = words;
 	this -> calculate();

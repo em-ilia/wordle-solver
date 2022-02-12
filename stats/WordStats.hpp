@@ -14,12 +14,8 @@ struct AugmentedWord {
 	float prob;
 	std::string word;
 };
-bool compareAugmentedWord_prob(AugmentedWord x, AugmentedWord y) {
-	return x.prob < y.prob;
-}
-bool compareAugmentedWord_alpha(AugmentedWord x, AugmentedWord y) {
-	return x.word < y.word;
-}
+bool compareAugmentedWord_prob(AugmentedWord x, AugmentedWord y);
+bool compareAugmentedWord_alpha(AugmentedWord x, AugmentedWord y);
 
 class WordStats {
 	private:
