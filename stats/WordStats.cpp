@@ -97,12 +97,3 @@ std::vector<AugmentedWord> WordStats::maximizeWordProb(float POS, float TOT) {
 
 	return augmented_wl;
 }
-
-int main() {
-	// Must switch func declaration to public for this to run,
-	// but it does work when tested at this commit!
-	WordStats ws = WordStats(WORDS);
-	std::cout << ws.maximizeWordProb().back().word << " "
-						<< ws.maximizeWordProb().back().prob << "\n";
-	return 0;
-}
