@@ -3,6 +3,7 @@
 
 GameState::GameState(std::vector<AugmentedWord> initialList) {
 	this -> wl = initialList;
+	state = "?????";
 	this -> recalculate();
 }
 
