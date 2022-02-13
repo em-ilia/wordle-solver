@@ -3,7 +3,6 @@
 
 #include "LetterDict.hpp"
 #include <map>
-#include <iostream>
 
 class LetterProbDict {
 	private:
