@@ -9,29 +9,15 @@ void printFive(std::vector<AugmentedWord> wl) {
 		std::cout << formatAugmentedWord(*i) << " ";
 	}
 	*/
+	std::cout << std::to_string(wl.size());
 	if (wl.size() == 0) return;
-	std::cout << formatAugmentedWord(wl.back());
+	std::cout << formatAugmentedWord(wl.back()) << "\n";
 	std:: cout << "\n";
 }
 
 int main() {
-	std::cout << "TEST CASE 1:\n";
 	WordStats ws = WordStats(WORDS);
 	GameState game = GameState(ws.maximizeWordProb());
-	printFive(game.getWordList());
-
-	game.enter("slate", {0,0,0,0,0});
-	game.recalculate();
-	printFive(game.getWordList());
-
-	game.enter("crony", {0,0,0,0,0});
-	game.recalculate();
-	printFive(game.getWordList());
-
-	game.enter("humid", {2,2,2,0,0});
-	game.recalculate();
-	printFive(game.getWordList());
-
 	std::cout << "\n";
 	std::cout << "TEST CASE 2:\n";
 
@@ -50,32 +36,5 @@ int main() {
 	game.recalculate();
 	printFive(game.getWordList());
 
-	std::cout << "\n";
-	std::cout << "TEST CASE 3:\n";
-
-	game = GameState(ws.maximizeWordProb());
-	printFive(game.getWordList());
-
-	game.enter("slate", {1,2,0,0,0});
-	game.recalculate();
-	printFive(game.getWordList());
-
-	std::cout << "\n";
-	std::cout << "TEST CASE 4:\n";
-
-	game = GameState(ws.maximizeWordProb());
-	printFive(game.getWordList());
-
-	game.enter("slate", {0,1,1,0,0});
-	game.recalculate();
-	printFive(game.getWordList());
-
-	game.enter("gaily", {0,1,0,1,0});
-	game.recalculate();
-	printFive(game.getWordList());
-
-	game.enter("coral", {1,2,0,2,2});
-	game.recalculate();
-	printFive(game.getWordList());
-
+	return 0;
 }

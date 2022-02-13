@@ -29,11 +29,21 @@ void GameState::enter(std::string word, std::array<int, 5> res) {
 		}
 	}
 
+	/*
 	std::unordered_set<char> diff;
 	std::set_difference(disallowed.begin(), disallowed.end(),
 											required.begin(), required.end(),
 											std::inserter(diff, diff.end()));
+											*/
+	for (char c : required) {
+		disallowed.erase(c);
+	}
+	/*
+	std::cout << "Printing difference from GameState::enter\n";
+	for (char c : diff) std::cout << c << " ";
+	std::cout << "\n";
 	disallowed = diff;
+	*/
 	//std::cout << "END CALL TO ENTER\n";
 }
 
@@ -147,4 +157,28 @@ void GameState::filter_anti() {
 	}
 	std::cout << "Final size of wl is " << std::to_string(wl.size()) << "\n";
 	std::cout << "END CALL TO FILTER ANTI\n";
+}
+
+void GameState::DEBUG_PRINT_STATE() {
+	// PRINT STATE
+
+	std::cout << "STATE: " << state << "\n";
+
+	// PRINT DISALLOWED
+
+	std::cout << "DISALLOWED: \n";
+	for (char c : disallowed) {
+		std::cout << c << " ";
+	}
+	std::cout << "\n";
+
+	// PRINT REQUIRED
+	std::cout << "REQUIRED: \n";
+	for (char c : required) {
+		std::cout << c << " ";
+	}
+	std::cout << "\n";
+
+	// PRINT ANTI
+
 }
