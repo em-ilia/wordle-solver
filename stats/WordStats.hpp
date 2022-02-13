@@ -16,6 +16,7 @@ struct AugmentedWord {
 };
 bool compareAugmentedWord_prob(AugmentedWord x, AugmentedWord y);
 bool compareAugmentedWord_alpha(AugmentedWord x, AugmentedWord y);
+std::string formatAugmentedWord(AugmentedWord aw);
 
 class WordStats {
 	private:

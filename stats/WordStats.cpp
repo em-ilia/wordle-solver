@@ -6,6 +6,9 @@ bool compareAugmentedWord_prob(AugmentedWord x, AugmentedWord y) {
 bool compareAugmentedWord_alpha(AugmentedWord x, AugmentedWord y) {
 	return x.word < y.word;
 }
+std::string formatAugmentedWord(AugmentedWord aw) {
+	return "(" + aw.word + ", " + std::to_string(aw.prob) + ")";
+}
 
 WordStats::WordStats(std::vector<std::string> words) {
 	this -> wordlist = words;
