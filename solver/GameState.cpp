@@ -31,6 +31,8 @@ void GameState::recalculate() {
 	filter_required();
 	filter_positional();
 	filter_anti();
+std::vector<AugmentedWord> GameState::getWordList() {
+	return wl;
 }
 
 // ADD FUNCTIONS

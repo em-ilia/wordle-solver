@@ -22,6 +22,7 @@ class GameState{
 		GameState(std::vector<AugmentedWord> initialList);
 		void enter(std::string word, std::array<int, 5> res);
 		void recalculate();
+		std::vector<AugmentedWord> getWordList();
 	private:
 		void addDisallowed(char letter);
 		void addRequired(char letter);
