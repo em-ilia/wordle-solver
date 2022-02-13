@@ -1,3 +1,5 @@
 all_words.csv
 *.json
-__pycache__
+a.out
+*.o
+__pycache__/
